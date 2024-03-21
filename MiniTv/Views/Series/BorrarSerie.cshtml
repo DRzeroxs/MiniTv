@@ -1,0 +1,60 @@
+﻿@model Database.ViewModels.SerieViewModel
+@{
+    ViewData["Title"] = "Eliminar Serie";
+}
+
+<div class="row">
+    <div class="offset-12">
+        <div class="w-100">
+            <p class="alert alert-danger">Seguro que quieres eliminar este genero ?</p>
+        </div>
+        <div class="card border">
+            <div class="card-header bg-dark">
+                <h3 class="text-white"><strong>Eliminar Serie</strong></h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="BorrarSerie" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" readonly />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Link" class="control-label"></label>
+                        <input asp-for="Link" class="form-control" readonly />
+                        <span asp-validation-for="Link" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Img" class="control-label"></label>
+                        <input asp-for="Img" class="form-control" readonly />
+                        <span asp-validation-for="Img" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="ProductoraId" class="control-label">Productora</label>
+                        <select asp-for="ProductoraId" class="form-control" readonly>
+                            <option value="">Selecciona una productora</option>
+                            @foreach (var productora in Model.Productoras)
+                            {
+                                <option value="@productora.Id">@productora.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="ProductoraId" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-danger d-block mx-auto"><i class="bi bi-eraser-fill"></i>Eliminar</button>
+                    </div>
+
+                </form>
+
+                <a href="javascript:history.go(-1)">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>

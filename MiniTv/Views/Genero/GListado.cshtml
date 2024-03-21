@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Database.Models.Genero>
+@{
+    ViewData["Title"] = "Generos";
+}
+
+<div class="row">
+    <div class="offset-9 col-3 mb-3">
+        <a asp-action="AgregarGenero" asp-controller="Genero" class="btn btn-secondary d-block mx-auto btn-lg">
+            <i class="bi bi-file-plus-fill"></i> Agregar Genero
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="offset-12">
+        <div class="card border">
+            <div class="card-header bg-dark">
+                <h3 class="text-white"><strong>Lista de Generos</strong></h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    @if(Model != null)
+                    {
+                        <table class="table table-bordered" id="tblGeneros" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m => m.Id)</th>
+                                    <th>@Html.DisplayNameFor(m => m.Name)</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var item in Model)
+                                {
+                                    <tr>
+                                        <td class="col-4">@Html.DisplayFor(m => item.Id)</td>
+                                        <td class="col-4">@Html.DisplayFor(m => item.Name)</td>
+                                        <td class="col-4">
+                                            <a class="btn btn-warning" asp-action="EditarGenero" asp-route-id="@item.Id">
+                                                <i class="bi bi-pencil-fill"></i> Editar
+                                            </a>
+                                            <a class="btn btn-danger" asp-action="BorrarGenero" asp-route-id="@item.Id">
+                                                <i class="bi bi-eraser-fill"></i> Eliminar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No hay Registros</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

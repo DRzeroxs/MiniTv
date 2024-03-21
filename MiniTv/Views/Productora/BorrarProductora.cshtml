@@ -1,0 +1,38 @@
+﻿@model Database.Models.Productora
+@{
+    ViewData["Title"] = "Eliminar Productora";
+}
+
+<div class="row">
+    <div class="offset-12">
+        <div class="w-100">
+            <p class="alert alert-danger">Seguro que quieres eliminar esta productora ?</p>
+        </div>
+        <div class="card border">
+            <div class="card-header bg-dark">
+                <h3 class="text-white"><strong>Eliminar Productora</strong></h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="BorrarProductora" method="post">
+
+                    <!--ID de la productora como campo oculto-->
+                    <input type="hidden" asp-for="Id" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" readonly />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-danger d-block mx-auto"><i class="bi bi-eraser-fill"></i>Eliminar</button>
+                    </div>
+
+                </form>
+
+                <a asp-controller="Productora" asp-action="PListado">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>

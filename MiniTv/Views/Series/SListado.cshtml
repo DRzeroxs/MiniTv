@@ -1,0 +1,113 @@
+﻿@model List<Database.Models.Serie>
+@{
+    ViewData["Title"] = "Series";
+}
+
+<style>
+    #listado {
+        overflow-y: scroll;
+    }
+</style>
+
+<div class="row">
+    <div class="offset-9 col-3 mb-3">
+        <a asp-action="AgregarSerie" asp-controller="Series" class="btn btn-secondary d-block mx-auto btn-lg"> 
+            <i class="bi bi-file-plus-fill"></i> Nueva Serie
+        </a>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col">
+        <form method="get" action="@Url.Action("SListado", "Series")">
+            <div class="input-group">
+                <input type="text" name="buscado" class="form-control" placeholder="Buscar por nombre de serie">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div id="main" class="d-flex" style="max-height: 70vh;">
+        <div id="filtro" class="col-2 h-100">
+            <form class="mb-4" method="get" action="@Url.Action("FiltrarPorProductora", "Series")">
+                <div id="filtroProductora" class="h-50 w-100">
+                    <label for="productora">Seleccionar Productora:</label>
+                    <select name="productora" id="productora" class="form-control">
+                        <option value="">Productoras</option>
+                        @foreach (var productora in ViewBag.Productoras)
+                        {
+                            <option value="@productora.Id">@productora.Name</option>
+                        }
+                    </select>
+                    <button type="submit" class="btn btn-primary mt-2"><i class="bi bi-funnel-fill"></i>Filtrar por Productora</button>
+                </div>
+            </form>
+            <form method="get" action="@Url.Action("FiltrarPorGenero", "Series")">
+                <div id="filtroGenero" class="h-50 w-100">
+                    <label for="genero">Seleccionar Género:</label>
+                    <select name="genero" id="genero" class="form-control">
+                        <option value="">Géneros</option>
+                        @foreach (var genero in ViewBag.Generos)
+                        {
+                            <option value="@genero.Id">@genero.Name</option>
+                        }
+                    </select>
+                    <button type="submit" class="btn btn-primary mt-2"><i class="bi bi-funnel-fill"></i>Filtrar por Género</button>
+                </div>
+            </form>
+            <button asp-controller="Series" asp-action="SListado" class="btn btn-warning mt-4" style="bottom: 10;"><i class="bi bi-funnel-fill"></i>Eliminar Filtro</button>
+        </div>
+        <div id="listado" class="container col-10">
+
+
+            @foreach (var serie in Model)
+            {
+                <div class="row">
+                    @foreach (var j in Enumerable.Range(0, 4).Where(j => (Model.IndexOf(serie) * 4 + j) < Model.Count))
+                    {
+                        var currentSerie = Model[Model.IndexOf(serie) * 4 + j];
+                        <div class="col-md-3" style="min-height: 405px;">
+                            <div class="card m-2 border" style="border:solid 2px green; height: 405px;">
+                                <img class="card-img-top" src="@currentSerie.Img" alt="Card image cap" style="width: 220px; height: 220px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">@currentSerie.Name</h5>
+                                    <p>@(currentSerie.Productora != null ? currentSerie.Productora.Name : "Sin especificar")</p>
+                                    <p class="card-text">
+                                        @if (currentSerie.Genero != null && currentSerie.Genero.Any())
+                                        {
+                                            @foreach (var serieGenero in currentSerie.Genero)
+                                            {
+                                                <span>[@serieGenero.genero.Name]</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span>No se han especificado géneros.</span>
+                                        }
+                                    </p>
+                                    <a asp-controller="Series" asp-action="Reproducir" asp-route-id="@currentSerie.Id" class="btn btn-primary" style="bottom: 10;">Ver Serie</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="w-100">
+        <p class="alert alert-danger"> No hay Registros</p>
+    </div>
+}
+
+
+

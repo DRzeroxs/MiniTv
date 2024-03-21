@@ -1,0 +1,35 @@
+﻿@model Database.Models.Productora
+@{
+    ViewData["Title"] = "Editar Productora";
+}
+
+<div class="row">
+    <div class="offset-12">
+        <div class="card border">
+            <div class="card-header bg-dark">
+                <h3 class="text-white"><strong>Editar Productora</strong></h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="EditarProductora" method="post">
+
+                    <!--ID del genero como campo oculto-->
+                    <input type="hidden" asp-for="Id" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Ingresa el nombre" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-warning d-block mx-auto"><i class="bi bi-pencil-fill"></i>Editar</button>
+                    </div>
+
+                </form>
+
+                <a asp-controller="Productora" asp-action="PListado">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+﻿@model Database.ViewModels.SerieViewModel;
+@{
+    ViewData["Title"] = "Agregar Serie";
+}
+
+<div class="row">
+    <div class="offset-12">
+        <div class="card border">
+            <div class="card-header bg-dark">
+                <h3 class="text-white"><strong>Agregar Serie</strong></h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="AgregarSerie" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Ingresa el nombre" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Link" class="control-label"></label>
+                        <input asp-for="Link" class="form-control" placeholder="Ingresa link del video" />
+                        <span asp-validation-for="Link" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Img" class="control-label"></label>
+                        <input asp-for="Img" class="form-control" placeholder="Ingresa link de la imagen" />
+                        <span asp-validation-for="Img" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="ProductoraId" class="control-label">Productora</label>
+                        <select asp-for="ProductoraId" class="form-control">
+                            <option value="">Selecciona una productora</option>
+                            @foreach (var productora in Model.Productoras)
+                            {
+                                <option value="@productora.Id">@productora.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="ProductoraId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="control-label">Géneros</label><br />
+                        @foreach (var genero in Model.Generos)
+                        {
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="chk_generoId" name="GeneroIds" value="@genero.Id">
+                                <label class="form-check-label" for="chk_generoId">@genero.Name</label>
+                            </div>
+                        }
+                        <span asp-validation-for="GeneroIds" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary d-block mx-auto"><i class="bi bi-plus-circle-fill"></i>Agregar</button>
+                    </div>
+
+                </form>
+
+                <a asp-controller="Series" asp-action="SListado">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>
